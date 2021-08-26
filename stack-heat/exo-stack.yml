@@ -4,6 +4,22 @@ parameters:
   imageId:
     type: string
     description: provid image id
+  KeyName:
+    type: string
+    description: provid keypair name
+  Instanceid:
+    type: string
+    description: provid instance id
+  flavorName:
+    type: string
+    description: provide flavor name
+  networks:
+    type: comma_delimited_list
+    description: 
+  param_size:
+    type: string
+    description: provid size of volume
+
 
 ressources:
   image_from_heat:
@@ -12,4 +28,33 @@ ressources:
       container_format: bare
       disk_format: iso
       location: https://dl-cdn.alpinelinux.org/alpine/v3.14/releases/x86_64/alpine-standard-3.14.1-x86_64.iso
-      id: {○get_param: Imageid}
+      id: {get_param: Imageid}
+
+keypair_from_heat:
+  type: OS::Nova::KeyPair
+  properties:
+    name: {get_param: KeyName }
+    save_private_key: true
+    type: ssh
+
+instance_from_heat:
+  type: OS::Nova::Server  
+  properties:
+    flavor: {get_param: flavorName}
+    image: {get_param: Imageid}
+    key_name: {get_param: KeyName}
+    reservation_id: {get_param: instanceId}
+    #networks:
+    #  - public
+    #  - shared
+    networks: {get_param: networks}  
+
+volume_from_heat:
+  type: OS::Cinder::Volume
+  properties:
+    size: {get_param: param_size}
+
+outputs:
+  private_keypair:
+    description: this is your private key pair
+    value: {get_attr: [keypair_from_heat, ]}
