@@ -17,7 +17,8 @@ parameters:
     type: comma_delimited_list
     description: 
   param_size:
-    type: string
+    type: number
+    default: 1
     description: provid size of volume
 
 
