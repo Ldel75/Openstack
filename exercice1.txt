@@ -1,0 +1,8 @@
+Créer une image dans Glance (Alpine par exemple)
+Créer une nouvelle clé SSH
+Créer une instance à partir d'une image et d'une flavor, 
+en spécifiant le réseau public et privée et la clé SSH précédemment enregistrée
+Vérifier que l'instance apparait ACTIVE, afficher les logs
+Créer un volume
+Attacher le volume à l'instance
+Adapter les groupes de sécurité et leurs règles pour une connexion ssh

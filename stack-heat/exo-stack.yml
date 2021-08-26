@@ -1,0 +1,20 @@
+description: Simple template to deploy a single compute instance with an attached volume
+
+resources:
+  my_instance:
+    type: OS::Nova::Server
+    properties:
+      image: https://dl-cdn.alpinelinux.org/alpine/v3.14/releases/x86_64/alpine-standard-3.14.1-x86_64.iso
+      flavor: alpine
+
+  my_volume:
+    type: OS::Cinder::Volume
+    properties:
+      size: 5
+
+  my_attachment:
+      type: OS::Cinder::VolumeAttachment
+      properties:
+        instance_uuid:  { get_resource: my_instance }
+        volume_id: { get_resource: my_volume }
+        mountpoint: /dev/vdb
