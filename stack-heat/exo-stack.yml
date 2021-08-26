@@ -57,4 +57,4 @@ volume_from_heat:
 outputs:
   private_keypair:
     description: this is your private key pair
-    value: {get_attr: [keypair_from_heat, ]}
+    value: {get_attr: [keypair_from_heat, private_key]}
